@@ -1,0 +1,186 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Details</title>
+    <style>
+        h1 {
+            color: green;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .payment-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .qr-code-container {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+
+        .qr-code {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="payment-container">
+        <h1 class="page-title">Payment Details</h1>
+        <h2>Your Travel Package Selection:</h2>
+        <p>{{ selected_package.dep }} 🌅 To {{ selected_package.des }} ⛱️</p>
+        <p>Cost: $ {{ selected_package.price }} 💵</p>
+
+        <h2 style="margin-bottom: 20px;">Payment Options:</h2>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 15px; cursor: pointer;" alt="phonepe.png" onclick="showQRPopup('{% static 'phonepeQR.jpg' %}')">
+                PhonePe <img src="{% static 'phonepe.png' %}" style="width: 50px; height: auto; margin-left: 10px;">
+            </li>
+
+            <li style="margin-bottom: 15px; cursor: pointer;" onclick="showQRPopup('{% static 'paytmQR.jpg' %}')">
+                Paytm <img src="{% static 'Paytm.png' %}" style="width: 50px; height: auto; margin-left: 10px;">
+            </li>
+
+            <li style="margin-bottom: 15px; cursor: pointer;" onclick="showQRPopup('{% static 'gpayQR.jpg' %}')">
+                GPay <img src="{% static 'gpay.png' %}" style="width: 50px; height: auto; margin-left: 10px;">
+            </li>
+        </ul>
+
+        <script>
+            function showQRPopup(imageSrc) {
+                var popup = document.getElementById("qrPopup");
+                var img = document.getElementById("popupImg");
+                img.src = imageSrc;
+                popup.style.display = "block";
+            }
+
+            function closePopup() {
+                document.getElementById("qrPopup").style.display = "none";
+            }
+        </script>
+
+        <!-- Popup window -->
+        <div id="qrPopup"
+            style="display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); border: 1px solid #ccc; background-color: white; padding: 20px; z-index: 1000;">
+            <img id="popupImg" style="width: 100%; height: auto;">
+            <button onclick="closePopup()" style="margin-top: 10px;">Close</button>
+        </div>
+    </div>
+
+    <style>
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+        background-color: #f2f2f2;
+        border: 1px solid #dcdcdc;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%; /* Adjust the width as needed */
+    }
+
+        li:hover {
+            background-color: #e9e9e9;
+        }
+
+        li img {
+            margin-left: 10px;
+            width: 50px;
+            height: auto;
+        }
+
+    #qrPopup {
+        display: none;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid #ccc;
+        background-color: white;
+        padding: 20px;
+        z-index: 1000;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        width: 200px; /* Adjust the width as needed */
+        max-width: 100%; /* Ensure the width doesn't exceed the viewport width */
+        height: auto; /* Let the height adjust automatically based on content */
+}
+
+        #popupImg {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .close-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-top: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .payment-container {
+            margin: 0 auto;
+            max-width: 800px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2em;
+            color: #3dce08;
+            margin-top: 20px;
+            margin-bottom: 40px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</body>
+</html>

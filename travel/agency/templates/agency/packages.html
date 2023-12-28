@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Packages</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    .package-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .package {
+      width: 300px;
+      margin: 20px;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .package img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .package h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    .package p {
+      color: #666;
+    }
+
+    .package label {
+      display: block;
+    }
+
+    .package button {
+      margin-top: 10px;
+    }
+
+    .package button {
+    margin-top: 10px;
+    background-color: #4CAF50; /* Green color */
+    color: white; /* Text color */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .package button:hover {
+  background-color: #45a049;
+  }
+
+  </style>
+</head>
+<body>
+
+  <center><h1>Travel Packages</h1></center>
+
+  <form method="post" action="{% url 'agency:package_selection' %}">
+    {% csrf_token %}
+    <div class="package-container">
+      {% for package in pack %}
+        <div class="package">
+          <label>
+            <img src="{{ package.image.url }}" alt="{{ package.dep }} to {{ package.des }}">
+            <h2>{{ package.dep }} to {{ package.des }}</h2>
+            <p>Price: ${{ package.price }}</p>
+            <input type="hidden" name="selected_p" value="{{ package.id }}">
+            <button type="submit">Select Package</button>
+
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+  </form>
+</body>
+</html>
+
