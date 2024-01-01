@@ -70,11 +70,10 @@
 <body>
 
   <center><h1>Travel Packages</h1></center>
-
+  {% for package in pack %}
   <form method="post" action="{% url 'agency:package_selection' %}">
     {% csrf_token %}
     <div class="package-container">
-      {% for package in pack %}
         <div class="package">
           <label>
             <img src="{{ package.image.url }}" alt="{{ package.dep }} to {{ package.des }}">
@@ -85,9 +84,10 @@
 
           </label>
         </div>
-      {% endfor %}
+
     </div>
   </form>
+{% endfor %}
 </body>
 </html>
 
