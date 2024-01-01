@@ -4,8 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 
-# def user_details(request):
-#     return render(request, 'agency/details.html')
 @login_required
 def travel_details(request):
     if request.method == 'POST':

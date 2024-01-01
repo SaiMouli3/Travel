@@ -1,75 +1,266 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Travel Booking Form</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Sofia', sans-serif;
+      background-color: #f2f3f9;
       margin: 0;
       padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      font-size: large;
     }
 
     form {
-      max-width: 400px;
-      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      /* width: 100%; */
+      margin: 0px;
+      height: 550px;
     }
 
     label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      color: #333;
+      font-size: 0.9em;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
-      padding: 8px;
-      margin-bottom: 16px;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       box-sizing: border-box;
     }
 
     button {
+      width: 100%;
       background-color: #4CAF50;
       color: white;
-      padding: 10px 15px;
+      padding: 10px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 1em;
     }
 
     button:hover {
       background-color: #45a049;
     }
+
+    .content-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .slider-container {
+      margin: 10px;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 850px;
+      /* Adjust based on your preference */
+      height: 590px;
+      /* Adjust based on your preference */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+      display: none;
+    }
+
+    .prev,
+    .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -22px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover,
+    .next:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .content-container {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+      gap: 0;
+      transform: scale(0.85);
+
+    }
+
+    .form-container{
+      width: 450px;
+    }
+
+    .form-container,
+    .slider-container {
+      z-index: 2;
+      /* Each container takes up an equal amount of space */
+      margin: 0;
+      /* Reset margin */
+    }
+
+    .plane {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: 100px;
+      position: absolute;
+      /* Position it absolutely */
+      top: 10px;
+      left: 20px;
+      /* Adjust as needed */
+      z-index: 0;
+      /* Ensure it's above other elements */
+    }
   </style>
+
+  <script defer>
+    var slideIndex = 1;
+    var defaultColorB = '#4CAF50';
+    var colorSlide1B = '#2596be';
+    var colorSlide2B = '#ddaba9';
+    var colorSlide3B = '#eda54b';
+    var colorSlide4B = '#36633b';
+    var colorSlide5B = '#d0d8e0';
+    var colorSlide6B = '#149459';
+    var colorSlide1 = '#f2f3f9';
+    var colorSlide2 = '#f8eeee';
+    var colorSlide3 = '#fbeddb';
+    var colorSlide4 = '#d7e0d8';
+    var colorSlide5 = '#f6f7f9';
+    var colorSlide6 = '#d0eade';
+
+    showSlides(slideIndex);
+
+    function moveSlide(n) {
+      var button = document.querySelector("button");
+      var body = document.querySelector("body");
+      showSlides(slideIndex += n);
+      if (slideIndex === 1) {
+        button.style.backgroundColor = colorSlide1B; // Color for slide 1
+        body.style.backgroundColor = colorSlide1;
+      } else if (slideIndex === 2) {
+        button.style.backgroundColor = colorSlide2B; // Color for slide 2
+        body.style.backgroundColor = colorSlide2;
+      } else if (slideIndex === 3) {
+        button.style.backgroundColor = colorSlide3B; // Color for slide 3
+        body.style.backgroundColor = colorSlide3;
+      } else if (slideIndex === 4) {
+        button.style.backgroundColor = colorSlide4B; // Color for slide 4
+        body.style.backgroundColor = colorSlide4;
+      } else if (slideIndex === 5) {
+        button.style.backgroundColor = colorSlide5B; // Color for slide 5
+        body.style.backgroundColor = colorSlide5;
+      } else if (slideIndex === 6) {
+        button.style.backgroundColor = colorSlide6B; // Color for slide 6
+        body.style.backgroundColor = colorSlide6;
+      } else {
+        button.style.backgroundColor = defaultColorB; // Default color
+      }
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("slide");
+      if (n > slides.length) { slideIndex = 1; }
+      if (n < 1) { slideIndex = slides.length; }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slides[slideIndex - 1].style.display = "block";
+    }
+
+
+  </script>
+
 </head>
+
 <body>
+  <img src="{%static 'PLANE.png' %}" class="plane">
+  <div class="content-container">
+    <div class="form-container">
+      <form method="post" action="">
+        {% csrf_token %}
+        <label for="fromLocation">From:</label>
+        <input type="text" id="fromLocation" name="fromLocation" placeholder="Enter departure location" required>
 
-  <form method="post" action="">
-    {% csrf_token %}
-    <label for="fromLocation">From:</label>
-    <input type="text" id="fromLocation" name="fromLocation" placeholder="Enter departure location" required>
+        <label for="toLocation">To:</label>
+        <input type="text" id="toLocation" name="toLocation" placeholder="Enter destination location" required>
 
-    <label for="toLocation">To:</label>
-    <input type="text" id="toLocation" name="toLocation" placeholder="Enter destination location" required>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required>
 
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" name="startDate" required>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" required>
 
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" name="endDate" required>
+        <label for="tripType">Trip Type:</label>
+        <select id="tripType" name="tripType" required>
+          <option value="roundTrip">Round Trip</option>
+          <option value="singleTrip">Single Trip</option>
+        </select>
 
-    <label for="tripType">Trip Type:</label>
-    <select id="tripType" name="tripType" required>
-      <option value="roundTrip">Round Trip</option>
-      <option value="singleTrip">Single Trip</option>
-    </select>
+        <button type="submit" style="font-family: Sofia; font-weight: bold;" class="button">Submit</button>
+      </form>
+    </div>
+    <div class="slider-container">
+      <!-- Slider images -->
+      <img src="{%static 'slide1.jpg' %}" class="slide" style="display: block;">
+      <img src="{%static 'slide2.jpg' %}" class="slide">
+      <img src="{%static 'slide3.jpg' %}" class="slide">
+      <img src="{%static 'slide4.jpg' %}" class="slide">
+      <img src="{%static 'slide5.jpg' %}" class="slide">
+      <img src="{%static 'slide6.jpg' %}" class="slide">
 
-    <button type="submit">Submit</button>
-  </form>
+
+      <a class="prev" onclick="moveSlide(-1)">&#10094;</a>
+      <a class="next" onclick="moveSlide(1)">&#10095;</a>
+    </div>
+  </div>
+
 
 </body>
+
 </html>
